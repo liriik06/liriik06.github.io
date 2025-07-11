@@ -19,6 +19,7 @@
 <body>
   <div id="map">Загрузка карты...</div>
   
+  
   <script>
     const map = L.map("map").setView([0, 0], 15); // Стартовая позиция
 
@@ -28,16 +29,18 @@
     }).addTo(map);
 
     // Добавим маркер
-    const marker = L.marker([0, 0]).addTo(map).bindPopup("Вы здесь").openPopup();
+    const marker = L.marker([0, 0]).addTo(map).bindPopup('currentZoom').openPopup();
 
     // Обновляем координаты при движении
     navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
         marker.setLatLng([latitude, longitude]);
-        
-        const currentZoom = map.getZoom();
-        map.setView([latitude, longitude], currentZoom);
+
+        const currentZoom = map.getZoom(); // сохранить текущий масштаб
+        map.setView([latitude, longitude], currentZoom); // не сбрасывать!
+    
+        marker.getPopup().setContent(`${currentZoom}`).openOn(map);
       },
       (error) => {
         alert("Ошибка геолокации: " + error.message);
@@ -47,7 +50,7 @@
         timeout: 10000,
         maximumAge: 0,
       }
-    );
+  );
   </script>
 </body>
 </html>
