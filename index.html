@@ -36,6 +36,8 @@
         const { latitude, longitude } = position.coords;
         marker.setLatLng([latitude, longitude]);
         map.setView([latitude, longitude], 15);
+        //const currentZoom = map.getZoom();
+        //map.setView([latitude, longitude], currentZoom);
       },
       (error) => {
         alert("Ошибка геолокации: " + error.message);
