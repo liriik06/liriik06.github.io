@@ -1,37 +1,31 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const button = document.getElementById("geo-btn");
-    const details = document.getElementById("details");
-    let reqcount = 0;
 
-    button.addEventListener("click", () => {
-        if (!navigator.geolocation) {
-            details.innerText = "Геолокация не поддерживается этим браузером.";
-            return;
-        }
+const map = L.map("map").setView([0, 0], 15); // Стартовая позиция
 
-        navigator.geolocation.watchPosition(successCallback, errorCallback, {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0
-        });
-    });
+// Добавим слой OpenStreetMap
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap contributors",
+}).addTo(map);
 
-    function successCallback(position) {
-        const { accuracy, latitude, longitude, altitude, heading, speed } = position.coords;
-        reqcount++;
-        details.innerHTML = `
-            ✅ Геолокация получена:<br>
-            Accuracy: ${accuracy}<br>
-            Latitude: ${latitude}<br>
-            Longitude: ${longitude}<br>
-            Altitude: ${altitude}<br>
-            Heading: ${heading}<br>
-            Speed: ${speed}<br>
-            Запросов: ${reqcount}
-        `;
+// Добавим маркер
+const marker = L.marker([0, 0]).addTo(map).bindPopup('currentZoom').openPopup();
+
+// Обновляем координаты при движении
+navigator.geolocation.watchPosition(
+    (position) => {
+        const { latitude, longitude } = position.coords;
+        marker.setLatLng([latitude, longitude]);
+
+        const currentZoom = map.getZoom(); // сохранить текущий масштаб
+        map.setView([latitude, longitude], currentZoom); // не сбрасывать!
+
+        marker.getPopup().setContent('Вы здесь').openOn(map);
+    },
+    (error) => {
+        alert("Ошибка геолокации: " + error.message);
+    },
+    {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
     }
-
-    function errorCallback(error) {
-        details.innerHTML = `❌ Ошибка геолокации: ${error.message} (код ${error.code})`;
-    }
-});
+);

@@ -1,56 +1,23 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Реальное местоположение на карте</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <title>RTGL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-  <style>
-    #map {
-      height: 100vh;
-    }
-  </style>
+    <style>
+        #map {
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
-  <div id="map">Загрузка карты...</div>
-  
-  
-  <script>
-    const map = L.map("map").setView([0, 0], 15); // Стартовая позиция
-
-    // Добавим слой OpenStreetMap
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap contributors",
-    }).addTo(map);
-
-    // Добавим маркер
-    const marker = L.marker([0, 0]).addTo(map).bindPopup('currentZoom').openPopup();
-
-    // Обновляем координаты при движении
-    navigator.geolocation.watchPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        marker.setLatLng([latitude, longitude]);
-
-        const currentZoom = map.getZoom(); // сохранить текущий масштаб
-        map.setView([latitude, longitude], currentZoom); // не сбрасывать!
-    
-        marker.getPopup().setContent(`${currentZoom}`).openOn(map);
-      },
-      (error) => {
-        alert("Ошибка геолокации: " + error.message);
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0,
-      }
-  );
-  </script>
+    <div id="map">Загрузка карты...</div>
+    <script src="script.js"></script>
 </body>
 </html>
