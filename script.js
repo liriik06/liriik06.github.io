@@ -26,8 +26,6 @@ function handleLocationUpdate(lat, lng) {
   //map.setView([lat, lng], map.getZoom());
   //testMarker.bindPopup("Вы тут");
 
-
-
   if (targetCircle) {
     const distance = map.distance([lat, lng], targetCircle.getLatLng());
     const radius = targetCircle.getRadius();
@@ -143,3 +141,13 @@ document.getElementById("stop-sound").addEventListener("click", () => {
   audio.currentTime = 0;
   document.getElementById("zone-alert").style.display = "none";
 });
+
+document.getElementById("go-to-me").addEventListener("click", () => {
+  if (testMarker) {
+    const currentZoom = map.getZoom();
+    const position = testMarker.getLatLng();
+    map.setView(position, currentZoom, { animate: true});
+  } else {
+    alert("Позиция не определена.")
+  }
+})
