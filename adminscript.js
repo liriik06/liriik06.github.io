@@ -22,7 +22,7 @@ testMarker = L.marker([55.75, 37.62], { draggable: false })
 // === Универсальный обработчик координат ===
 function handleLocationUpdate(lat, lng) {
   testMarker.setLatLng([lat, lng]);
-  map.setView([lat, lng], map.getZoom());
+  //map.setView([lat, lng], map.getZoom());
   testMarker.getPopup().setContent(`Lat: ${lat.toFixed(5)}<br>Lng: ${lng.toFixed(5)}`).openOn(map);
 
   if (targetCircle) {
