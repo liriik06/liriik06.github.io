@@ -7,6 +7,7 @@ let testMarker = null;
 let targetCircle = null;
 let hasEnteredZone = false;
 let zoneRadius = 500;
+let autoCentered =false;
 
 // Инициализация карты
 const map = L.map("map").setView([55.75, 37.62], 15);
@@ -23,7 +24,9 @@ testMarker = L.marker([55.75, 37.62], { draggable: false })
 function handleLocationUpdate(lat, lng) {
   testMarker.setLatLng([lat, lng]);
   //map.setView([lat, lng], map.getZoom());
-  testMarker.bindPopup("Вы тут");
+  //testMarker.bindPopup("Вы тут");
+
+
 
   if (targetCircle) {
     const distance = map.distance([lat, lng], targetCircle.getLatLng());
@@ -39,6 +42,9 @@ function handleLocationUpdate(lat, lng) {
     } else if (distance > radius && hasEnteredZone) {
       hasEnteredZone = false;
     }
+  }
+  if (!autoCentered) {
+    autoCentered = true
   }
 }
 
