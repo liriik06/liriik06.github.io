@@ -23,7 +23,7 @@ testMarker = L.marker([55.75, 37.62], { draggable: false })
 function handleLocationUpdate(lat, lng) {
   testMarker.setLatLng([lat, lng]);
   //map.setView([lat, lng], map.getZoom());
-  testMarker.bindPopup("Вы тут").openPopup();
+  testMarker.bindPopup("Вы тут");
 
   if (targetCircle) {
     const distance = map.distance([lat, lng], targetCircle.getLatLng());
