@@ -142,6 +142,7 @@ document.getElementById("stop-sound").addEventListener("click", () => {
   document.getElementById("zone-alert").style.display = "none";
 });
 
+// === Откидываение к местоположению пользователя ===
 document.getElementById("go-to-me").addEventListener("click", () => {
   if (testMarker) {
     const currentZoom = map.getZoom();
