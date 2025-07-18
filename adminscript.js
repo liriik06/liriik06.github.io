@@ -23,7 +23,7 @@ testMarker = L.marker([55.75, 37.62], { draggable: false })
 function handleLocationUpdate(lat, lng) {
   testMarker.setLatLng([lat, lng]);
   map.setView([lat, lng], map.getZoom());
-  testMarker.getPopup().setContent("Вы тут").openOn(map);
+  testMarker.getPopup().setContent(`Lat: ${lat.toFixed(5)}<br>Lng: ${lng.toFixed(5)}`).openOn(map);
 
   if (targetCircle) {
     const distance = map.distance([lat, lng], targetCircle.getLatLng());
@@ -56,11 +56,12 @@ function syncSliders() {
   handleLocationUpdate(lat, lng);
 }
 
-/*// Активировать этот блок для фальшметки:
+// Активировать этот блок для фальшметки:
 latSlider.addEventListener("input", syncSliders);
 lngSlider.addEventListener("input", syncSliders);
-syncSliders(); // первая отрисовка*/
+syncSliders(); // первая отрисовка
 
+/*
 // === Реальный режим (раскомментируй этот блок, если хочешь реальную геолокацию) ===
 if ("geolocation" in navigator) {
   navigator.geolocation.watchPosition(
@@ -80,6 +81,7 @@ if ("geolocation" in navigator) {
 } else {
   alert("Геолокация не поддерживается в этом браузере.");
 }
+*/
 
 // === Кнопка "Поставить метку" (центр зоны) ===
 document.getElementById("set-marker").addEventListener("click", () => {

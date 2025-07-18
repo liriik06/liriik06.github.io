@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>adminAlarmPass</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: sans-serif;
+    }
+    #controls {
+      padding: 10px;
+      background: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    #map {
+      height: calc(100vh - 140px);
+    }
+    label {
+      font-size: 14px;
+    }
+    input[type=range] {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div id="controls">
+  <button id="set-marker">Поставить метку</button>
+
+  <!--<button id="go-to-me">К моему местоположеню</button>-->
+
+  <label>
+    Широта (latitude): <span id="lat-value">55.75</span>
+    <input type="range" id="lat-slider" min="55.70" max="55.80" step="0.0001" value="55.75">
+  </label>
+
+  <label>
+    Долгота (longitude): <span id="lng-value">37.62</span>
+    <input type="range" id="lng-slider" min="37.60" max="37.65" step="0.0001" value="37.62">
+  </label>
+
+  <label>
+    Радиус зоны (в метрах): <span id="radius-value">500</span> m
+    <input type="range" id="radius-slider" min="100" max="5000" step="50" value="500">
+  </label>
+
+  <audio id="ping-sound" src="budilnik.mp3" preload="auto" loop></audio>
+
+  <div id="zone-alert" style="
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fffae6;
+    border: 1px solid #ccc;
+    padding: 15px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    font-size: 16px;
+    border-radius: 8px;
+  ">
+    🚩 Вы почти на месте!
+    <button id="stop-sound" style="margin-left: 10;">Ok</button>
+  </div>
+</div>
+
+<div id="map">Загрузка карты...</div>
+
+<!-- Leaflet JS -->
+<script src="leaflet.js"></script>
+
+<!--<script src="adminscript.js"></script>-->
+<script src="test.js"></script>
+
+</body>
+</html>
